@@ -8,7 +8,11 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   var _isLogin = true;
+
+  void _submit() {}
 
   @override
   Widget build(BuildContext context) {
@@ -35,56 +39,59 @@ class _AuthScreenState extends State<AuthScreen> {
                   child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Form(
+                    key: _formKey,
                     child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextFormField(
-                      decoration: const InputDecoration(labelText: 'Email'),
-                      keyboardType: TextInputType.emailAddress,
-                      autocorrect: false,
-                      textCapitalization: TextCapitalization.none,
-                      validator: (value) {
-                        if (value == null ||
-                            value.trim().isEmpty ||
-                            !value.contains('@')) {
-                          return 'Please emter a valid address.';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      decoration: const InputDecoration(labelText: 'Password'),
-                      obscureText: true,
-                      autocorrect: false,
-                      textCapitalization: TextCapitalization.none,
-                      validator: (value) {
-                        if (value == null || value.trim().length < 6) {
-                          return 'Password must be at least 6 characters long.';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primaryContainer),
-                        onPressed: () {},
-                        child: Text(_isLogin ? 'Login' : 'Sign Up')),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          _isLogin = !_isLogin;
-                        });
-                      },
-                      child: Text(_isLogin
-                          ? 'Create an account'
-                          : 'I already have an account'),
-                    )
-                  ],
-                )),
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextFormField(
+                          decoration: const InputDecoration(labelText: 'Email'),
+                          keyboardType: TextInputType.emailAddress,
+                          autocorrect: false,
+                          textCapitalization: TextCapitalization.none,
+                          validator: (value) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !value.contains('@')) {
+                              return 'Please emter a valid address.';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          decoration:
+                              const InputDecoration(labelText: 'Password'),
+                          obscureText: true,
+                          autocorrect: false,
+                          textCapitalization: TextCapitalization.none,
+                          validator: (value) {
+                            if (value == null || value.trim().length < 6) {
+                              return 'Password must be at least 6 characters long.';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer),
+                            onPressed: _submit,
+                            child: Text(_isLogin ? 'Login' : 'Sign Up')),
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              _isLogin = !_isLogin;
+                            });
+                          },
+                          child: Text(_isLogin
+                              ? 'Create an account'
+                              : 'I already have an account'),
+                        )
+                      ],
+                    )),
               )),
             )
           ],
